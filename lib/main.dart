@@ -28,7 +28,7 @@ class _HelloYouState extends State<HelloYou> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello"),
+        title: Text("Greetings!"),
         backgroundColor: Colors.blueAccent,
       ),
       body: Container(
@@ -42,7 +42,7 @@ class _HelloYouState extends State<HelloYou> {
                 });
               },
             ),
-            Text("Hello " + name + (name.isNotEmpty ? "!" : ""))
+            Text(name.isNotEmpty ? "Hello " + name + "!" : ""),
           ],
         ),
       ),
