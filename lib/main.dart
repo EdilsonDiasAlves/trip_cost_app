@@ -7,30 +7,33 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Hello You',
+      title: 'Trip Cost Calculator',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HelloYou(),
+      home: FuelForm(),
     );
   }
 }
 
-class HelloYou extends StatefulWidget {
+class FuelForm extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _HelloYouState();
+  State<StatefulWidget> createState() => _FuelFormState();
 }
 
-class _HelloYouState extends State<HelloYou> {
-  String name = "";
+class _FuelFormState extends State<FuelForm> {
+  TextEditingController distanceController = TextEditingController();
+  String result = '';
   final _currencies = ['Dollars', 'Euro', 'Pounds'];
   String _currency = 'Dollars';
+
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = Theme.of(context).textTheme.headline6;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Greetings!"),
+        title: Text('Trip Cost Calculator'),
         backgroundColor: Colors.blueAccent,
       ),
       body: Container(
@@ -38,11 +41,16 @@ class _HelloYouState extends State<HelloYou> {
         child: Column(
           children: <Widget>[
             TextField(
-              onChanged: (String typedName) {
-                setState(() {
-                  name = typedName;
-                });
-              },
+              controller: distanceController,
+              decoration: InputDecoration(
+                labelText: 'Distance',
+                hintText: 'e.g. 124',
+                labelStyle: textStyle,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+              keyboardType: TextInputType.number,
             ),
             DropdownButton<String>(
               items: _currencies.map((String value) {
@@ -53,7 +61,20 @@ class _HelloYouState extends State<HelloYou> {
                 _onDropDownChanged(value);
               },
             ),
-            Text(name.isNotEmpty ? "Hello " + name + "!" : ""),
+            RaisedButton(
+              color: Theme.of(context).primaryColorDark,
+              textColor: Theme.of(context).primaryColorLight,
+              onPressed: () {
+                setState(() {
+                  result = distanceController.text;
+                });
+              },
+              child: Text(
+                'Submit',
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Text(result),
           ],
         ),
       ),
